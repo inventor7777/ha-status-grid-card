@@ -1296,25 +1296,25 @@ class StatusGridCardEditor extends HTMLElement {
               <div class="editor-group">
                 <div class="editor-group__title">Header Title</div>
                 <div data-index="${index}" data-field-wrap="profile"><ha-selector data-index="${index}" data-field="profile" data-selector-type="profile"></ha-selector></div>
-                <div data-index="${index}" data-field-wrap="name"><ha-textfield data-index="${index}" data-field="name" label="Label"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="name"><ha-selector data-index="${index}" data-field="name" data-selector-type="name"></ha-selector></div>
                 <div data-index="${index}" data-field-wrap="icon"><ha-selector data-index="${index}" data-field="icon" data-selector-type="icon"></ha-selector></div>
               </div>
               <div class="editor-group">
                 <div class="editor-group__title">Entity</div>
                 <div data-index="${index}" data-field-wrap="entity"><ha-selector data-index="${index}" data-field="entity" data-selector-type="entity"></ha-selector></div>
-                <div data-index="${index}" data-field-wrap="unit"><ha-textfield data-index="${index}" data-field="unit" label="Unit override"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="unit"><ha-textfield data-index="${index}" data-field="unit"></ha-textfield></div>
               </div>
               <div class="editor-group">
                 <div class="editor-group__title">Sub Entity</div>
                 <div data-index="${index}" data-field-wrap="sub_entity"><ha-selector data-index="${index}" data-field="sub_entity" data-selector-type="sub_entity"></ha-selector></div>
-                <div data-index="${index}" data-field-wrap="sub_unit"><ha-textfield data-index="${index}" data-field="sub_unit" label="Sub unit override"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="sub_unit"><ha-textfield data-index="${index}" data-field="sub_unit"></ha-textfield></div>
               </div>
               <div class="editor-group">
                 <div class="editor-group__title">Tile</div>
-                <div data-index="${index}" data-field-wrap="bar_min"><ha-textfield data-index="${index}" data-field="bar_min" label="Bar min"></ha-textfield></div>
-                <div data-index="${index}" data-field-wrap="bar_max"><ha-textfield data-index="${index}" data-field="bar_max" label="Bar max"></ha-textfield></div>
-                <div data-index="${index}" data-field-wrap="warn_threshold"><ha-textfield data-index="${index}" data-field="warn_threshold" label="Warning threshold"></ha-textfield></div>
-                <div data-index="${index}" data-field-wrap="bad_threshold"><ha-textfield data-index="${index}" data-field="bad_threshold" label="Critical threshold"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="bar_min"><ha-textfield data-index="${index}" data-field="bar_min"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="bar_max"><ha-textfield data-index="${index}" data-field="bar_max"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="warn_threshold"><ha-textfield data-index="${index}" data-field="warn_threshold"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="bad_threshold"><ha-textfield data-index="${index}" data-field="bad_threshold"></ha-textfield></div>
                 <div data-index="${index}" data-field-wrap="invert_thresholds"><ha-selector data-index="${index}" data-field="invert_thresholds" data-selector-type="invert_thresholds"></ha-selector></div>
                 <div data-index="${index}" data-field-wrap="hide_bar"><ha-selector data-index="${index}" data-field="hide_bar" data-selector-type="hide_bar"></ha-selector></div>
               </div>
@@ -1478,6 +1478,29 @@ class StatusGridCardEditor extends HTMLElement {
 
     this._elements.titleWeight?.addEventListener("value-changed", (event) => {
       this._updateTitleWeight(this._getEventValue(event));
+    });
+
+    this.querySelectorAll('ha-selector[data-selector-type="name"]').forEach((field) => {
+      field.selector = { text: {} };
+      field.label = "Name";
+    });
+    this.querySelectorAll('ha-textfield[data-field="unit"]').forEach((field) => {
+      field.label = "Unit override";
+    });
+    this.querySelectorAll('ha-textfield[data-field="sub_unit"]').forEach((field) => {
+      field.label = "Sub unit override";
+    });
+    this.querySelectorAll('ha-textfield[data-field="bar_min"]').forEach((field) => {
+      field.label = "Bar min";
+    });
+    this.querySelectorAll('ha-textfield[data-field="bar_max"]').forEach((field) => {
+      field.label = "Bar max";
+    });
+    this.querySelectorAll('ha-textfield[data-field="warn_threshold"]').forEach((field) => {
+      field.label = "Warning threshold";
+    });
+    this.querySelectorAll('ha-textfield[data-field="bad_threshold"]').forEach((field) => {
+      field.label = "Critical threshold";
     });
 
     this._elements.tileCount.selector = {
