@@ -470,6 +470,23 @@ class StatusGridCard extends HTMLElement {
     return Number.isFinite(num) ? num : null;
   }
 
+  _formatEntityStateNative(stateObj, unit) {
+    if (!stateObj || typeof this._hass?.formatEntityState !== "function") {
+      return null;
+    }
+
+    if (INVALID_STATE_VALUES.includes(stateObj.state)) {
+      return null;
+    }
+
+    const entityUnit = stateObj.attributes?.unit_of_measurement || "";
+    if ((unit || "") !== entityUnit) {
+      return null;
+    }
+
+    return this._hass.formatEntityState(stateObj);
+  }
+
   _getSubValue(tile) {
     const entityId = tile?.sub_entity;
     if (!entityId) return "";
@@ -481,6 +498,10 @@ class StatusGridCard extends HTMLElement {
     }
 
     const unit = tile?.sub_unit || stateObj.attributes?.unit_of_measurement || "";
+    const nativeFormatted = this._formatEntityStateNative(stateObj, unit);
+    if (nativeFormatted !== null) {
+      return nativeFormatted;
+    }
     return this._formatValueString(value, unit);
   }
 
@@ -529,6 +550,11 @@ class StatusGridCard extends HTMLElement {
   }
 
   _getDisplayValue(tile, stateObj, numericValue, unit) {
+    const nativeFormatted = this._formatEntityStateNative(stateObj, unit);
+    if (nativeFormatted !== null) {
+      return nativeFormatted;
+    }
+
     if (Number.isFinite(numericValue)) {
       return this._formatValue(numericValue, unit);
     }
