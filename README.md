@@ -19,6 +19,8 @@ Or manually add the card as a Lovelace resource:
 ```yaml
 type: custom:status-grid-card
 title: DXP4800
+title_size: 11
+title_weight: "400"
 tile_count: 4
 tile_columns: auto
 tile_contrast: default
@@ -68,6 +70,8 @@ tiles:
 - In Sections view, the card now uses automatic height by not defining fixed row sizing.
 - The outer card surface follows the active HA theme via `ha-card` variables like background, border radius, border, shadow, and text color.
 - `tile_count` supports `2`, `4`, `6`, or `8` tiles.
+- `title_size` controls the title font size in pixels.
+- `title_weight` controls the title font weight. Valid values are `300` through `900`.
 - `tile_columns` controls the internal widget layout:
   - `auto` = responsive wrapping layout
   - `1` = single vertical column

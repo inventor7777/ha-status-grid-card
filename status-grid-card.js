@@ -247,6 +247,10 @@ class StatusGridCard extends HTMLElement {
     });
   }
 
+  _isSectionsViewContext() {
+    return Boolean(this.closest("hui-section"));
+  }
+
   _getRenderedColumnCount(grid) {
     const computed = getComputedStyle(grid);
     const template = computed.gridTemplateColumns.trim();
@@ -305,6 +309,10 @@ class StatusGridCard extends HTMLElement {
     if (!card || !wrap || !grid) return;
 
     this._applyCenteredGridLayout(grid);
+
+    if (!this._isSectionsViewContext()) {
+      return;
+    }
 
     const tileCount = this._normalizeTileCount(this._config?.tile_count);
     if (!tileCount) return;
