@@ -1297,7 +1297,7 @@ class StatusGridCardEditor extends HTMLElement {
           ></ha-code-editor>
         </label>
         <div class="editor-inline">
-          <ha-textfield id="title_size" type="number" label="Title size (px)"></ha-textfield>
+          <ha-selector id="title_size"></ha-selector>
           <ha-selector id="title_weight"></ha-selector>
         </div>
         <ha-selector id="tile_count"></ha-selector>
@@ -1336,19 +1336,19 @@ class StatusGridCardEditor extends HTMLElement {
               <div class="editor-group">
                 <div class="editor-group__title">Entity</div>
                 <div data-index="${index}" data-field-wrap="entity"><ha-selector data-index="${index}" data-field="entity" data-selector-type="entity"></ha-selector></div>
-                <div data-index="${index}" data-field-wrap="unit"><ha-textfield data-index="${index}" data-field="unit"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="unit"><ha-selector data-index="${index}" data-field="unit" data-selector-type="unit"></ha-selector></div>
               </div>
               <div class="editor-group">
                 <div class="editor-group__title">Sub Entity</div>
                 <div data-index="${index}" data-field-wrap="sub_entity"><ha-selector data-index="${index}" data-field="sub_entity" data-selector-type="sub_entity"></ha-selector></div>
-                <div data-index="${index}" data-field-wrap="sub_unit"><ha-textfield data-index="${index}" data-field="sub_unit"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="sub_unit"><ha-selector data-index="${index}" data-field="sub_unit" data-selector-type="sub_unit"></ha-selector></div>
               </div>
               <div class="editor-group">
                 <div class="editor-group__title">Tile</div>
-                <div data-index="${index}" data-field-wrap="bar_min"><ha-textfield data-index="${index}" data-field="bar_min"></ha-textfield></div>
-                <div data-index="${index}" data-field-wrap="bar_max"><ha-textfield data-index="${index}" data-field="bar_max"></ha-textfield></div>
-                <div data-index="${index}" data-field-wrap="warn_threshold"><ha-textfield data-index="${index}" data-field="warn_threshold"></ha-textfield></div>
-                <div data-index="${index}" data-field-wrap="bad_threshold"><ha-textfield data-index="${index}" data-field="bad_threshold"></ha-textfield></div>
+                <div data-index="${index}" data-field-wrap="bar_min"><ha-selector data-index="${index}" data-field="bar_min" data-selector-type="bar_min"></ha-selector></div>
+                <div data-index="${index}" data-field-wrap="bar_max"><ha-selector data-index="${index}" data-field="bar_max" data-selector-type="bar_max"></ha-selector></div>
+                <div data-index="${index}" data-field-wrap="warn_threshold"><ha-selector data-index="${index}" data-field="warn_threshold" data-selector-type="warn_threshold"></ha-selector></div>
+                <div data-index="${index}" data-field-wrap="bad_threshold"><ha-selector data-index="${index}" data-field="bad_threshold" data-selector-type="bad_threshold"></ha-selector></div>
                 <div data-index="${index}" data-field-wrap="invert_thresholds"><ha-selector data-index="${index}" data-field="invert_thresholds" data-selector-type="invert_thresholds"></ha-selector></div>
                 <div data-index="${index}" data-field-wrap="hide_bar"><ha-selector data-index="${index}" data-field="hide_bar" data-selector-type="hide_bar"></ha-selector></div>
               </div>
@@ -1498,7 +1498,17 @@ class StatusGridCardEditor extends HTMLElement {
       this._updateTitle(this._getEventValue(event));
     });
 
-    this._elements.titleSize?.addEventListener("change", (event) => {
+    this._elements.titleSize.selector = {
+      number: {
+        min: 1,
+        max: 64,
+        mode: "box",
+        unit_of_measurement: "px",
+      },
+    };
+    this._elements.titleSize.label = "Title size";
+
+    this._elements.titleSize?.addEventListener("value-changed", (event) => {
       this._updateTitleSize(this._getEventValue(event));
     });
 
@@ -1518,22 +1528,28 @@ class StatusGridCardEditor extends HTMLElement {
       field.selector = { text: {} };
       field.label = "Name";
     });
-    this.querySelectorAll('ha-textfield[data-field="unit"]').forEach((field) => {
+    this.querySelectorAll('ha-selector[data-selector-type="unit"]').forEach((field) => {
+      field.selector = { text: {} };
       field.label = "Unit override";
     });
-    this.querySelectorAll('ha-textfield[data-field="sub_unit"]').forEach((field) => {
+    this.querySelectorAll('ha-selector[data-selector-type="sub_unit"]').forEach((field) => {
+      field.selector = { text: {} };
       field.label = "Sub unit override";
     });
-    this.querySelectorAll('ha-textfield[data-field="bar_min"]').forEach((field) => {
+    this.querySelectorAll('ha-selector[data-selector-type="bar_min"]').forEach((field) => {
+      field.selector = { text: {} };
       field.label = "Bar min";
     });
-    this.querySelectorAll('ha-textfield[data-field="bar_max"]').forEach((field) => {
+    this.querySelectorAll('ha-selector[data-selector-type="bar_max"]').forEach((field) => {
+      field.selector = { text: {} };
       field.label = "Bar max";
     });
-    this.querySelectorAll('ha-textfield[data-field="warn_threshold"]').forEach((field) => {
+    this.querySelectorAll('ha-selector[data-selector-type="warn_threshold"]').forEach((field) => {
+      field.selector = { text: {} };
       field.label = "Warning threshold";
     });
-    this.querySelectorAll('ha-textfield[data-field="bad_threshold"]').forEach((field) => {
+    this.querySelectorAll('ha-selector[data-selector-type="bad_threshold"]').forEach((field) => {
+      field.selector = { text: {} };
       field.label = "Critical threshold";
     });
 
